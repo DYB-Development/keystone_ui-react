@@ -55,3 +55,9 @@ jobs:
 
       - name: Test the React controls
         run: npm test
+
+      - name: Rebuild the script the page loads
+        run: npm run build
+
+      - name: Fail if the committed script is stale
+        run: git diff --exit-code -- app/assets/javascripts
