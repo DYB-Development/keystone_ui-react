@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-16
+
 ### Added
 - React controls matching keystone_ui's button, panel, section, page, page header, card, alert, badge, checkbox, input, select, textarea and form field text, styled with keystone_ui-styles classes.
 - A registry an engine registers each React UI with under a name, and mounting that draws every registered UI on a page.
