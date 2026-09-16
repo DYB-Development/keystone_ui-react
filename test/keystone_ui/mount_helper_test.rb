@@ -10,8 +10,19 @@ module KeystoneUi
       include ActionView::Helpers::TagHelper
       include KeystoneUi::React::MountHelper
 
-      def test_mounting_names_the_ui_to_draw
-        assert_includes react_ui("alembic/page-builder"), 'data-react-ui="alembic/page-builder"'
+      def test_naming_the_react_ui_to_mount
+        assert_includes react_ui("test/greeting"), 'data-react-ui="test/greeting"'
+      end
+
+      def test_giving_the_react_ui_its_props_as_json
+        assert_includes react_ui("test/greeting", { name: "Ada" }), 'data-props="{&quot;name&quot;:&quot;Ada&quot;}"'
+      end
+
+      def test_keeping_the_other_attributes_the_page_gives_the_element
+        mounted = react_ui("test/greeting", {}, class: "flex-1", data: { flow_canvas: true })
+
+        assert_includes mounted, 'class="flex-1"'
+        assert_includes mounted, "data-flow-canvas"
       end
     end
   end
