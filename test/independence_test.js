@@ -4,7 +4,9 @@ import { readdirSync, readFileSync } from "node:fs"
 
 const directory = new URL("../src/", import.meta.url)
 
-const outsideImports = () => readdirSync(directory).flatMap((file) =>
+const RUNTIME = "runtime.js"
+
+const outsideImports = () => readdirSync(directory).filter((file) => file !== RUNTIME).flatMap((file) =>
   [ ...readFileSync(new URL(file, directory), "utf8").matchAll(/from "([^"]+)"/g) ]
     .map((match) => match[1])
     .filter((source) => source !== "react" && !source.startsWith("./"))

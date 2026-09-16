@@ -4,8 +4,11 @@
   "description": "React mounting, a component registry and controls that match keystone_ui",
   "type": "module",
   "main": "src/index.js",
-  "files": [ "src" ],
+  "files": [
+    "src"
+  ],
   "scripts": {
+    "build": "esbuild src/runtime.js --bundle --minify --format=iife --target=es2020 --define:process.env.NODE_ENV=\\\"production\\\" --outfile=app/assets/javascripts/keystone_ui/react.js",
     "test": "node --import ./test/support/jsx.js --test \"test/**/*_test.js\""
   },
   "repository": {
