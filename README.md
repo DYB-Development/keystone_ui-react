@@ -48,8 +48,12 @@ client from the page instead:
 ```bash
 esbuild app/javascript/alembic/page_builder.jsx --bundle --format=iife \
   --alias:react=keystone_ui-react/src/react_on_page.js \
-  --alias:react-dom/client=keystone_ui-react/src/react_dom_on_page.js
+  --alias:react-dom/client=keystone_ui-react/src/react_dom_on_page.js \
+  --alias:react/jsx-runtime=keystone_ui-react/src/jsx_runtime_on_page.js
 ```
+
+The last alias is for packages an engine depends on that draw with React's
+automatic runtime rather than with `createElement`.
 
 The page loads the gem's script before any engine's script, since an engine's
 script reads React off the page as it runs.
