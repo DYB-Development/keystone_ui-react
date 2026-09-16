@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- A package an engine depends on that imports React DOM itself, rather than its client, now reads the page's React DOM too, so the engine's script no longer carries a copy of React DOM.
+
 ## [0.1.1] - 2026-09-16
 
 ### Added

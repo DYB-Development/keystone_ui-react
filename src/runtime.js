@@ -1,5 +1,6 @@
 import React from "react"
-import * as ReactDOM from "react-dom/client"
+import * as ReactDOM from "react-dom"
+import * as ReactDOMClient from "react-dom/client"
 
 globalThis.React = React
-globalThis.ReactDOM = ReactDOM
+globalThis.ReactDOM = { ...ReactDOM, ...ReactDOMClient }
