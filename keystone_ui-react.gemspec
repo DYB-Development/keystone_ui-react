@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 3.2.0"
 
-  spec.files = Dir["lib/**/*", "app/**/*"] + [ "LICENSE" ]
+  spec.files = Dir["lib/**/*", "app/**/*"] + [ "MIT-LICENSE" ]
   spec.require_paths = [ "lib" ]
 
   spec.add_dependency "railties", ">= 7.0"
