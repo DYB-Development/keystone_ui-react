@@ -49,6 +49,7 @@ client from the page instead:
 esbuild app/javascript/alembic/page_builder.jsx --bundle --format=iife \
   --alias:react=keystone_ui-react/src/react_on_page.js \
   --alias:react-dom/client=keystone_ui-react/src/react_dom_on_page.js \
+  --alias:react-dom=keystone_ui-react/src/react_dom_on_page.js \
   --alias:react/jsx-runtime=keystone_ui-react/src/jsx_runtime_on_page.js
 ```
 
