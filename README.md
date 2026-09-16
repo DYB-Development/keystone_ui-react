@@ -33,6 +33,27 @@ git tag rather than from the npm registry:
 }
 ```
 
+## One React on the page
+
+The gem ships React already built, and the page loads it once however many
+engines draw React UIs on it:
+
+```erb
+<%= javascript_include_tag "keystone_ui/react", defer: true %>
+```
+
+Each engine builds its own script without React in it, taking React and the DOM
+client from the page instead:
+
+```bash
+esbuild app/javascript/alembic/page_builder.jsx --bundle --format=iife \
+  --alias:react=keystone_ui-react/src/react_on_page.js \
+  --alias:react-dom/client=keystone_ui-react/src/react_dom_on_page.js
+```
+
+The page loads the gem's script before any engine's script, since an engine's
+script reads React off the page as it runs.
+
 ## Mounting a React UI
 
 An engine registers each UI under a name and mounts every one the page carries:
