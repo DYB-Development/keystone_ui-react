@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-16
+
 ### Added
 - A module an engine's build reads React's automatic JSX runtime back from, so a package that draws with that runtime rather than with `createElement` uses the page's React too.
 
