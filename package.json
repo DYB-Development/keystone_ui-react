@@ -1,6 +1,6 @@
 {
   "name": "keystone_ui-react",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React mounting, a component registry and controls that match keystone_ui",
   "type": "module",
   "main": "src/index.js",
