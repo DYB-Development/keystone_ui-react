@@ -35,3 +35,15 @@ test("renders every UI on the page into its own element", () => {
 
   assert.deepEqual(rendered.map(({ element, tree }) => [ element, tree.type ]), [ [ flow, Flow ], [ builder, Builder ] ])
 })
+
+test("an element already drawn into is not drawn into a second time", () => {
+  const Greeting = () => null
+  register("test/greeting", Greeting)
+  const element = uiElement("test/greeting", {})
+  const { rendered, createRoot } = recordingRoots()
+
+  mountAll(pageWith(element), createRoot)
+  mountAll(pageWith(element), createRoot)
+
+  assert.equal(rendered.length, 1)
+})

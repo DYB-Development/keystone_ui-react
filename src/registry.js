@@ -1,11 +1,16 @@
 import React from "react"
 
 const registered = new Map()
+const drawn = new Map()
 
 export const register = (name, component) => registered.set(name, component)
 
 export const mountAll = (page, createRoot) =>
   page.querySelectorAll("[data-react-ui]").forEach((element) => {
+    if (drawn.has(element)) return
+
     const Component = registered.get(element.dataset.reactUi)
-    createRoot(element).render(React.createElement(Component, JSON.parse(element.dataset.props)))
+    const root = createRoot(element)
+    drawn.set(element, root)
+    root.render(React.createElement(Component, JSON.parse(element.dataset.props)))
   })
