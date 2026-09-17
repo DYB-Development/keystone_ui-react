@@ -65,12 +65,17 @@ An engine registers each UI under a name and mounts every one the page carries:
 
 ```javascript
 import { createRoot } from "react-dom/client"
-import { register, mountAll } from "keystone_ui-react/src/registry"
+import { register } from "keystone_ui-react/src/registry.js"
+import { startMounting } from "keystone_ui-react/src/mounting.js"
 import PageBuilder from "./page_builder/PageBuilder"
 
 register("alembic/page-builder", PageBuilder)
-mountAll(document, createRoot)
+startMounting(document, createRoot)
 ```
+
+`startMounting` draws the UIs the page already carries, draws them again on a
+Turbo visit, and takes them down before Turbo keeps a copy of the page, so a UI
+appears whether its page was loaded fresh, reached by a link, or gone back to.
 
 The view writes the element that UI mounts into, with the props it draws from:
 
