@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- A React UI now appears on a page reached by a Turbo visit, not only on a page loaded fresh, and it is taken down before Turbo keeps a copy of the page so going back does not show a stale one. An engine gets this by starting mounting once, in place of drawing the UIs itself.
+
 ## [0.1.2] - 2026-09-16
 
 ### Fixed
