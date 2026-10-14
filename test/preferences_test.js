@@ -19,3 +19,15 @@ test("reports a save that cannot reach the save address as failed", async () => 
 
   assert.equal(await savePreference("/keystone_ui_preferences/months", { hidden_columns: [] }, page, unreachable), false)
 })
+
+test("sends nothing for a visitor with no save address", async () => {
+  const requests = []
+  const recording = async (url) => {
+    requests.push(url)
+    return { ok: true }
+  }
+
+  await savePreference(null, { hidden_columns: [] }, page, recording)
+
+  assert.deepEqual(requests, [])
+})
