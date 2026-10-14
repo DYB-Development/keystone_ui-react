@@ -97,6 +97,31 @@ end
 Anything else passed to `react_ui` lands on the element, so a UI can be given
 classes or its own data attributes.
 
+## Saving a person's choice
+
+A view passes a person's saved value and save address for a key as props, such
+as the ones keystone_ui-preferences gives a view:
+
+```erb
+<%= react_ui("app/months", keystone_component_preference("months")) %>
+```
+
+The UI draws from `value` and saves a new JSON object to `save_url` with
+`savePreference`, which sends it with the page's CSRF token:
+
+```javascript
+import { savePreference } from "keystone_ui-react/src/preferences.js"
+
+const saved = await savePreference(save_url, { hidden_columns: [ "pipeline" ] })
+```
+
+It resolves to `true` when the value is kept, and to `false` when the save
+address refuses it or cannot be reached, in which case nothing was saved. A
+visitor who is not signed in, or whose account does not let members choose, has
+no save address, so the UI offers no save and `savePreference` sends nothing.
+The page is not drawn again after a save, so the UI shows the new value from its
+own state until the next page view.
+
 ## The controls
 
 Each one takes keystone's classes and passes everything else through to the
@@ -123,7 +148,7 @@ bundle install
 npm install
 
 bundle exec rake test   # the mount helper
-npm test                # the controls and the registry
+npm test                # the controls, the registry and the save function
 bin/rubocop
 ```
 
