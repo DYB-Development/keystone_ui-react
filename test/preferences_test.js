@@ -13,3 +13,9 @@ test("reports a save the save address keeps as saved", async () => {
 test("reports a save the save address refuses as failed", async () => {
   assert.equal(await savePreference("/keystone_ui_preferences/months", [ "pipeline" ], page, answering({ ok: false, status: 422 })), false)
 })
+
+test("reports a save that cannot reach the save address as failed", async () => {
+  const unreachable = async () => { throw new TypeError("Failed to fetch") }
+
+  assert.equal(await savePreference("/keystone_ui_preferences/months", { hidden_columns: [] }, page, unreachable), false)
+})
