@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- A save function a React UI calls to save a person's new choice as a JSON object to the save address its view gave it, sending the page's CSRF token. It resolves to true when the value is kept and to false when the address refuses it or cannot be reached, and it sends nothing when the UI has no save address.
+
 ## [0.1.3] - 2026-09-16
 
 ### Fixed
