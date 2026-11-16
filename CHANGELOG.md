@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-16
+
 ### Added
 - A tab row that draws the same markup as keystone_ui's Rails tab switcher drawn as buttons, with its start alignment, its pill and underlined shapes and a count after each tab's label. It marks the chosen tab, calls back with the tab a person chooses, shows only the chosen tab's content, and stays on one line that scrolls sideways on a phone.
 
