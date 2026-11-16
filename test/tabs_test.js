@@ -42,3 +42,7 @@ test("shows only the chosen tab's content", () => {
 test("draws a tab's count in an info badge after its label", () => {
   assert.match(render({ tabs: [ { value: "validation", label: "Validation", count: 1 } ] }), /<button[^>]*>Validation <span class="ks-badge ks-badge-info">1<\/span><\/button>/)
 })
+
+test("draws no count for a tab whose count is zero", () => {
+  assert.doesNotMatch(render({ tabs: [ { value: "validation", label: "Validation", count: 0 } ] }), /ks-badge/)
+})
