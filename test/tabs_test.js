@@ -34,3 +34,7 @@ test("calls back with the chosen tab's value when a tab is chosen", () => {
 
   assert.deepEqual(chosen, [ "fixtures" ])
 })
+
+test("shows only the chosen tab's content", () => {
+  assert.deepEqual([ "Validation panel", "Fixtures panel" ].filter((content) => render({ value: "fixtures" }).includes(content)), [ "Fixtures panel" ])
+})

@@ -7,6 +7,7 @@ const Tabs = ({ tabs, value, onChange }) => (
         <button key={tab.value} type="button" className="ks-tab" data-active={tab.value === value ? "" : undefined} onClick={() => onChange(tab.value)}>{tab.label}</button>
       ))}
     </div>
+    {tabs.find((tab) => tab.value === value)?.content}
   </div>
 )
 
