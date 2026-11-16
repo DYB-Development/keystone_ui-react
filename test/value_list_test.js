@@ -114,3 +114,29 @@ const RAILS_ROWS = [
 test("draws the markup of keystone_ui's Rails value list", () => {
   assert.equal(normalized(render({ rows: RAILS_ROWS, align: "end" })), normalized(RAILS_MARKUP))
 })
+
+const RAILS_COLUMNS_MARKUP = `<dl class="ks-value-list grid grid-cols-1 sm:grid-cols-2 ks-grid-gap-sm">
+    <div class="flex flex-col min-w-0">
+      <dt class="ks-value-list-label basis-auto text-xs">
+        Output format
+        
+      </dt>
+      <dd class="ks-value-list-value">
+        copy_block v3
+      </dd>
+    </div>
+    <div class="flex flex-col min-w-0">
+      <dt class="ks-value-list-label basis-auto text-xs">
+        Timeout
+        
+      </dt>
+      <dd class="ks-value-list-value">
+        90s
+      </dd>
+    </div>
+</dl>
+`
+
+test("in columns, draws the markup of keystone_ui's Rails value list in columns", () => {
+  assert.equal(normalized(render({ rows: COLUMN_ROWS, columns: true })), normalized(RAILS_COLUMNS_MARKUP))
+})
