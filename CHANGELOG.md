@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Added
+- A value list that draws the same markup as keystone_ui's Rails value list, with a note under a label, a fallback for a missing value, a total row, a right answer mark and values pushed to the right end of their rows.
+- A columns option on the value list that puts a small label above each value and lays the pairs in two columns on a wider screen and one on a phone, with a long value wrapping inside its own column.
+- A code block that draws the same markup as keystone_ui's Rails code block, with an optional caption above the code and an optional language.
+- A disclosure that draws the same markup as keystone_ui's Rails disclosure, a summary line a person clicks to open and close the content under it, starting closed unless it is told to start open.
+
 ## [0.4.0] - 2026-11-16
 
 ### Added
