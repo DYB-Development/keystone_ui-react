@@ -28,3 +28,9 @@ test("draws a row marked as the total as a total row", () => {
 test("draws a right answer mark after the value of a row marked right", () => {
   assert.deepEqual([ ...render({ rows: [ { label: "Capital of France", value: "Paris", right: true }, { label: "Capital of Peru", value: "Quito" } ] }).matchAll(/<dd[^>]*>([^<]*)(<svg[^>]*aria-label="([^"]*)")?/g) ].map(([ , value, , mark ]) => [ value, mark ]), [ [ "Paris ", "Right" ], [ "Quito", undefined ] ])
 })
+
+const listClasses = (html) => html.match(/<dl class="([^"]*)"/)[1].split(" ")
+
+test("aligned to the end, pushes each value to the right end of its row", () => {
+  assert.deepEqual(listClasses(render({ rows: [], align: "end" })), [ "ks-value-list", "ks-value-list-end" ])
+})
