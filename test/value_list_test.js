@@ -35,6 +35,12 @@ test("aligned to the end, pushes each value to the right end of its row", () => 
   assert.deepEqual(listClasses(render({ rows: [], align: "end" })), [ "ks-value-list", "ks-value-list-end" ])
 })
 
+const COLUMN_ROWS = [ { label: "Output format", value: "copy_block v3" }, { label: "Timeout", value: "90s" } ]
+
+test("in columns, stacks each label above its value", () => {
+  assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<div class="([^"]*)"><dt/g) ].map(([ , names ]) => names.split(" ").includes("flex-col")), [ true, true ])
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">
