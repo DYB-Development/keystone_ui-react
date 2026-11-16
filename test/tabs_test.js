@@ -68,3 +68,7 @@ test("aligned to the start, starts the tab row at the left edge on every width",
 test("shaped as underlined tabs, carries the underlined row class", () => {
   assert.ok(rowClasses(render({ shape: "underline" })).includes("ks-tab-bar-underline"))
 })
+
+test("shaped as pills, carries the pill row class", () => {
+  assert.ok(rowClasses(render({ shape: "pills" })).includes("ks-tab-bar-pills"))
+})

@@ -7,7 +7,7 @@ const ROW_CLASSES = {
   start: "ks-tab-bar flex flex-wrap justify-start max-sm:flex-nowrap max-sm:overflow-x-auto"
 }
 
-const SHAPE_CLASSES = { underline: "ks-tab-bar-underline" }
+const SHAPE_CLASSES = { pills: "ks-tab-bar-pills", underline: "ks-tab-bar-underline" }
 
 const TAB_CLASSES = "ks-tab text-sm transition max-sm:shrink-0 max-sm:whitespace-nowrap"
 
