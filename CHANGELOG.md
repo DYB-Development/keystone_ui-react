@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-16
+
 ### Added
 - A radio card that draws the same markup as keystone_ui's Rails radio card, a label with a hint line under it, and a group of radio cards that marks only the chosen card and sets the cards side by side in a row that wraps in a narrow panel.
 
