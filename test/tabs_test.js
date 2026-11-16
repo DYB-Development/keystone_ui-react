@@ -14,3 +14,7 @@ const render = (props) => renderToStaticMarkup(React.createElement(Tabs, { tabs:
 test("shows each tab's label on a keystone tab", () => {
   assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="ks-tab[ "][^>]*>([^<]*)/g) ].map(([ , label ]) => label), [ "Validation", "Fixtures" ])
 })
+
+test("marks only the chosen tab as the current tab", () => {
+  assert.deepEqual([ ...render({ value: "fixtures" }).matchAll(/<button[^>]*data-active=""[^>]*>([^<]*)/g) ].map(([ , label ]) => label), [ "Fixtures" ])
+})
