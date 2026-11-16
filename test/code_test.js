@@ -13,3 +13,7 @@ test("shows its content in keystone's code block", () => {
 test("shows its caption above the code", () => {
   assert.match(render({ caption: "output_schema", children: "{headline: string}" }), /^<div class="ks-code overflow-hidden"><div class="ks-code-caption font-mono text-xs">output_schema<\/div><pre/)
 })
+
+test("marks its code with the language it is given", () => {
+  assert.match(render({ language: "json", children: "{}" }), /<code class="language-json">/)
+})
