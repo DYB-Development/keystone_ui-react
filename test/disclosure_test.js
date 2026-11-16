@@ -17,3 +17,7 @@ test("shows its content in the body under the summary", () => {
 test("starts closed unless it is told to start open", () => {
   assert.deepEqual([ render({}), render({ open: true }) ].map((html) => /^<details[^>]* open=""/.test(html)), [ false, true ])
 })
+
+test("draws a caret after its summary that turns over while it is open", () => {
+  assert.match(render({}), /<span>input_schema<\/span><span class="ks-disclosure-icon h-4 w-4 shrink-0 transition-transform group-open:rotate-180"><svg[^>]*><path[^>]*d="M19 9l-7 7-7-7"/)
+})
