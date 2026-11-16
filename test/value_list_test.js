@@ -45,6 +45,10 @@ test("in columns, draws each label in small text kept to the height of its text"
   assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<dt class="([^"]*)"/g) ].map(([ , names ]) => names), Array(2).fill("ks-value-list-label basis-auto text-xs"))
 })
 
+test("in columns, lays the pairs in one column on a phone and two on a wider screen", () => {
+  assert.deepEqual(listClasses(render({ rows: COLUMN_ROWS, columns: true })).filter((name) => [ "grid", "grid-cols-1", "sm:grid-cols-2" ].includes(name)), [ "grid", "grid-cols-1", "sm:grid-cols-2" ])
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">

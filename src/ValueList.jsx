@@ -3,6 +3,8 @@ import { classes } from "./classes"
 
 const ALIGN_CLASSES = { start: null, end: "ks-value-list-end" }
 
+const COLUMNS_CLASSES = "grid grid-cols-1 sm:grid-cols-2"
+
 const PAIR_CLASSES = "flex flex-col"
 
 const PAIR_LABEL_CLASSES = "ks-value-list-label basis-auto text-xs"
@@ -14,7 +16,7 @@ const RightMark = () => (
 const shownValue = ({ value, fallback }) => String(value ?? "") === "" ? fallback : value
 
 const ValueList = ({ rows, align = "start", columns = false }) => (
-  <dl className={classes("ks-value-list", ALIGN_CLASSES[align])}>
+  <dl className={classes("ks-value-list", ALIGN_CLASSES[align], columns && COLUMNS_CLASSES)}>
     {rows.map((row, index) => (
       <div key={index} className={classes(columns ? PAIR_CLASSES : "ks-value-list-row", row.total && "ks-value-list-total")}>
         <dt className={columns ? PAIR_LABEL_CLASSES : "ks-value-list-label"}>{row.label}{row.note != null && <>{" "}<span className="ks-value-list-note">{row.note}</span></>}</dt>
