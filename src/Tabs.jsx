@@ -10,6 +10,7 @@ const ROW_CLASSES = {
 const SHAPE_CLASSES = { pills: "ks-tab-bar-pills", underline: "ks-tab-bar-underline" }
 
 const TAB_CLASSES = "ks-tab text-sm transition max-sm:shrink-0 max-sm:whitespace-nowrap"
+const SHAPED_TAB_CLASSES = "ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap"
 
 const shown = (count) => typeof count === "string" ? count !== "" : count > 0
 
@@ -17,7 +18,7 @@ const Tabs = ({ tabs, value, onChange, align = "center", shape }) => (
   <div>
     <div className={classes(ROW_CLASSES[align], SHAPE_CLASSES[shape])}>
       {tabs.map((tab) => (
-        <button key={tab.value} type="button" className={TAB_CLASSES} data-active={tab.value === value ? "" : undefined} onClick={() => onChange(tab.value)}>
+        <button key={tab.value} type="button" className={shape ? SHAPED_TAB_CLASSES : TAB_CLASSES} data-active={tab.value === value ? "" : undefined} onClick={() => onChange(tab.value)}>
           {tab.label}{shown(tab.count) && <>{" "}<Badge variant="info">{tab.count}</Badge></>}
         </button>
       ))}
