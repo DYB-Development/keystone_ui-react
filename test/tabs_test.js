@@ -50,3 +50,9 @@ test("draws no count for a tab whose count is zero", () => {
 test("draws a count given as text exactly as written", () => {
   assert.match(render({ tabs: [ { value: "fixtures", label: "Fixtures", count: "0/12" } ] }), /<span class="ks-badge ks-badge-info">0\/12<\/span>/)
 })
+
+const rowClasses = (html) => html.match(/<div class="([^"]*\bks-tab-bar\b[^"]*)"/)[1].split(" ")
+
+test("keeps the tab row on one line that scrolls sideways on a phone", () => {
+  assert.deepEqual(rowClasses(render({})).filter((name) => [ "max-sm:flex-nowrap", "max-sm:overflow-x-auto" ].includes(name)), [ "max-sm:flex-nowrap", "max-sm:overflow-x-auto" ])
+})
