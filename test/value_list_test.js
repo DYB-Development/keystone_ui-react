@@ -12,3 +12,7 @@ const pairs = (html) =>
 test("shows each row's label and value as a row of keystone's value list", () => {
   assert.deepEqual(pairs(render({ rows: [ { label: "Rate", value: "$150.00" }, { label: "Timeout", value: "90s" } ] })), [ [ "Rate", "$150.00" ], [ "Timeout", "90s" ] ])
 })
+
+test("shows a row's note under its label", () => {
+  assert.match(render({ rows: [ { label: "Rate", value: "$150.00", note: "per hour" } ] }), /<dt class="ks-value-list-label">Rate <span class="ks-value-list-note">per hour<\/span><\/dt>/)
+})
