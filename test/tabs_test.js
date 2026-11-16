@@ -80,3 +80,36 @@ test("in a shaped tab row, no tab carries its own text size so the shape sets it
 test("in a shaped tab row, draws a count as plain text after the label rather than a badge", () => {
   assert.match(render({ shape: "underline", tabs: [ { value: "fixtures", label: "Fixtures", count: "12/12" } ] }), /<button[^>]*>Fixtures <span class="ks-tab-count">12\/12<\/span><\/button>/)
 })
+
+const RAILS_MARKUP = `<div data-controller="tab-switcher">
+  <div class="ks-tab-bar flex flex-wrap justify-start max-sm:flex-nowrap max-sm:overflow-x-auto ks-tab-bar-underline">
+      <button
+        type="button"
+        class="ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap ks-tab-active"
+        data-tab-switcher-target="tab"
+        data-action="click->tab-switcher#select"
+        data-index="0"
+        data-active>Validation</button>
+      <button
+        type="button"
+        class="ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap ks-tab-active"
+        data-tab-switcher-target="tab"
+        data-action="click->tab-switcher#select"
+        data-index="1"
+        >Fixtures</button>
+  </div>
+</div>`
+
+const STIMULUS_ATTRIBUTES = /\s(?:data-controller|data-tab-switcher-target|data-action|data-index)="[^"]*"/g
+
+const sortedAttributes = (attributes) =>
+  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
+
+const normalized = (html) =>
+  html.replace(STIMULUS_ATTRIBUTES, "").replace(/>\s+</g, "><").replace(/\s+>/g, ">").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`)
+
+test("draws the markup of keystone_ui's Rails tab switcher, less its Stimulus wiring", () => {
+  const tabs = [ { value: "validation", label: "Validation" }, { value: "fixtures", label: "Fixtures" } ]
+
+  assert.equal(normalized(render({ tabs, align: "start", shape: "underline" })), normalized(RAILS_MARKUP))
+})

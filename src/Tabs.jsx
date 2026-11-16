@@ -9,8 +9,8 @@ const ROW_CLASSES = {
 
 const SHAPE_CLASSES = { pills: "ks-tab-bar-pills", underline: "ks-tab-bar-underline" }
 
-const TAB_CLASSES = "ks-tab text-sm transition max-sm:shrink-0 max-sm:whitespace-nowrap"
-const SHAPED_TAB_CLASSES = "ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap"
+const TAB_CLASSES = "ks-tab text-sm transition max-sm:shrink-0 max-sm:whitespace-nowrap ks-tab-active"
+const SHAPED_TAB_CLASSES = "ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap ks-tab-active"
 
 const CountMark = ({ shape, count }) => shape ? <span className="ks-tab-count">{count}</span> : <Badge variant="info">{count}</Badge>
 
