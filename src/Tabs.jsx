@@ -12,6 +12,8 @@ const SHAPE_CLASSES = { pills: "ks-tab-bar-pills", underline: "ks-tab-bar-underl
 const TAB_CLASSES = "ks-tab text-sm transition max-sm:shrink-0 max-sm:whitespace-nowrap"
 const SHAPED_TAB_CLASSES = "ks-tab transition max-sm:shrink-0 max-sm:whitespace-nowrap"
 
+const CountMark = ({ shape, count }) => shape ? <span className="ks-tab-count">{count}</span> : <Badge variant="info">{count}</Badge>
+
 const shown = (count) => typeof count === "string" ? count !== "" : count > 0
 
 const Tabs = ({ tabs, value, onChange, align = "center", shape }) => (
@@ -19,7 +21,7 @@ const Tabs = ({ tabs, value, onChange, align = "center", shape }) => (
     <div className={classes(ROW_CLASSES[align], SHAPE_CLASSES[shape])}>
       {tabs.map((tab) => (
         <button key={tab.value} type="button" className={shape ? SHAPED_TAB_CLASSES : TAB_CLASSES} data-active={tab.value === value ? "" : undefined} onClick={() => onChange(tab.value)}>
-          {tab.label}{shown(tab.count) && <>{" "}<Badge variant="info">{tab.count}</Badge></>}
+          {tab.label}{shown(tab.count) && <>{" "}<CountMark shape={shape} count={tab.count} /></>}
         </button>
       ))}
     </div>

@@ -76,3 +76,7 @@ test("shaped as pills, carries the pill row class", () => {
 test("in a shaped tab row, no tab carries its own text size so the shape sets it", () => {
   assert.deepEqual([ ...render({ shape: "underline" }).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").includes("text-sm")), [ false, false ])
 })
+
+test("in a shaped tab row, draws a count as plain text after the label rather than a badge", () => {
+  assert.match(render({ shape: "underline", tabs: [ { value: "fixtures", label: "Fixtures", count: "12/12" } ] }), /<button[^>]*>Fixtures <span class="ks-tab-count">12\/12<\/span><\/button>/)
+})
