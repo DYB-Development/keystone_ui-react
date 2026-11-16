@@ -13,3 +13,7 @@ test("shows its summary on the line a person clicks to open it", () => {
 test("shows its content in the body under the summary", () => {
   assert.match(render({}), /<\/summary><div class="ks-disclosure-body text-sm">Schema body<\/div><\/details>$/)
 })
+
+test("starts closed unless it is told to start open", () => {
+  assert.deepEqual([ render({}), render({ open: true }) ].map((html) => /^<details[^>]* open=""/.test(html)), [ false, true ])
+})
