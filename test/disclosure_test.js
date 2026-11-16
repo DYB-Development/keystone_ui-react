@@ -9,3 +9,7 @@ const render = (props) => renderToStaticMarkup(React.createElement(Disclosure, {
 test("shows its summary on the line a person clicks to open it", () => {
   assert.match(render({}), /<summary class="ks-disclosure-summary[^"]*"><span>input_schema<\/span>/)
 })
+
+test("shows its content in the body under the summary", () => {
+  assert.match(render({}), /<\/summary><div class="ks-disclosure-body text-sm">Schema body<\/div><\/details>$/)
+})
