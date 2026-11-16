@@ -5,7 +5,7 @@ const ALIGN_CLASSES = { start: null, end: "ks-value-list-end" }
 
 const COLUMNS_CLASSES = "grid grid-cols-1 sm:grid-cols-2 ks-grid-gap-sm"
 
-const PAIR_CLASSES = "flex flex-col"
+const PAIR_CLASSES = "flex flex-col min-w-0"
 
 const PAIR_LABEL_CLASSES = "ks-value-list-label basis-auto text-xs"
 

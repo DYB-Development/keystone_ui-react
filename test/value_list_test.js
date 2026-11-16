@@ -53,6 +53,10 @@ test("in columns, spaces the pairs apart by the small grid gap", () => {
   assert.ok(listClasses(render({ rows: COLUMN_ROWS, columns: true })).includes("ks-grid-gap-sm"))
 })
 
+test("in columns, lets a long value shrink its pair to the column's width so it wraps there", () => {
+  assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<div class="([^"]*)"><dt/g) ].map(([ , names ]) => names.split(" ").includes("min-w-0")), [ true, true ])
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">
