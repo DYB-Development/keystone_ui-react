@@ -1,0 +1,14 @@
+import { test } from "node:test"
+import assert from "node:assert/strict"
+import React from "react"
+import { renderToStaticMarkup } from "react-dom/server"
+import ValueList from "../src/ValueList.jsx"
+
+const render = (props) => renderToStaticMarkup(React.createElement(ValueList, props))
+
+const pairs = (html) =>
+  [ ...html.matchAll(/<dt[^>]*>([^<]*)[\s\S]*?<dd[^>]*>([^<]*)/g) ].map(([ , label, value ]) => [ label.trim(), value.trim() ])
+
+test("shows each row's label and value as a row of keystone's value list", () => {
+  assert.deepEqual(pairs(render({ rows: [ { label: "Rate", value: "$150.00" }, { label: "Timeout", value: "90s" } ] })), [ [ "Rate", "$150.00" ], [ "Timeout", "90s" ] ])
+})

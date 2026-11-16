@@ -1,0 +1,14 @@
+import React from "react"
+
+const ValueList = ({ rows }) => (
+  <dl className="ks-value-list">
+    {rows.map((row, index) => (
+      <div key={index} className="ks-value-list-row">
+        <dt className="ks-value-list-label">{row.label}</dt>
+        <dd className="ks-value-list-value">{row.value}</dd>
+      </div>
+    ))}
+  </dl>
+)
+
+export default ValueList
