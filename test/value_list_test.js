@@ -49,6 +49,10 @@ test("in columns, lays the pairs in one column on a phone and two on a wider scr
   assert.deepEqual(listClasses(render({ rows: COLUMN_ROWS, columns: true })).filter((name) => [ "grid", "grid-cols-1", "sm:grid-cols-2" ].includes(name)), [ "grid", "grid-cols-1", "sm:grid-cols-2" ])
 })
 
+test("in columns, spaces the pairs apart by the small grid gap", () => {
+  assert.ok(listClasses(render({ rows: COLUMN_ROWS, columns: true })).includes("ks-grid-gap-sm"))
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">

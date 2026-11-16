@@ -3,7 +3,7 @@ import { classes } from "./classes"
 
 const ALIGN_CLASSES = { start: null, end: "ks-value-list-end" }
 
-const COLUMNS_CLASSES = "grid grid-cols-1 sm:grid-cols-2"
+const COLUMNS_CLASSES = "grid grid-cols-1 sm:grid-cols-2 ks-grid-gap-sm"
 
 const PAIR_CLASSES = "flex flex-col"
 
