@@ -16,3 +16,7 @@ test("marks only the chosen card as chosen", () => {
 
   assert.deepEqual(chosen, [ "candidate" ])
 })
+
+test("sets its cards side by side in one row", () => {
+  assert.match(render({}), /^<div class="flex[ "]/)
+})
