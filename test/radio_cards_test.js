@@ -20,3 +20,7 @@ test("marks only the chosen card as chosen", () => {
 test("sets its cards side by side in one row", () => {
   assert.match(render({}), /^<div class="flex[ "]/)
 })
+
+test("wraps its cards onto their own rows when the row is too narrow", () => {
+  assert.match(render({}), /^<div class="[^"]*\bflex-wrap\b/)
+})
