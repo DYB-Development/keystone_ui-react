@@ -64,3 +64,7 @@ test("keeps each tab label on one line at its full width on a phone", () => {
 test("aligned to the start, starts the tab row at the left edge on every width", () => {
   assert.deepEqual(rowClasses(render({ align: "start" })).filter((name) => [ "justify-start", "justify-center" ].includes(name)), [ "justify-start" ])
 })
+
+test("shaped as underlined tabs, carries the underlined row class", () => {
+  assert.ok(rowClasses(render({ shape: "underline" })).includes("ks-tab-bar-underline"))
+})
