@@ -56,3 +56,7 @@ const rowClasses = (html) => html.match(/<div class="([^"]*\bks-tab-bar\b[^"]*)"
 test("keeps the tab row on one line that scrolls sideways on a phone", () => {
   assert.deepEqual(rowClasses(render({})).filter((name) => [ "max-sm:flex-nowrap", "max-sm:overflow-x-auto" ].includes(name)), [ "max-sm:flex-nowrap", "max-sm:overflow-x-auto" ])
 })
+
+test("keeps each tab label on one line at its full width on a phone", () => {
+  assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").filter((name) => [ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ].includes(name))), Array(2).fill([ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ]))
+})
