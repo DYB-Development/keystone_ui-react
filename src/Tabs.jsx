@@ -1,7 +1,7 @@
 import React from "react"
 import Badge from "./Badge"
 
-const shown = (count) => count > 0
+const shown = (count) => typeof count === "string" ? count !== "" : count > 0
 
 const Tabs = ({ tabs, value, onChange }) => (
   <div>

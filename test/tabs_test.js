@@ -46,3 +46,7 @@ test("draws a tab's count in an info badge after its label", () => {
 test("draws no count for a tab whose count is zero", () => {
   assert.doesNotMatch(render({ tabs: [ { value: "validation", label: "Validation", count: 0 } ] }), /ks-badge/)
 })
+
+test("draws a count given as text exactly as written", () => {
+  assert.match(render({ tabs: [ { value: "fixtures", label: "Fixtures", count: "0/12" } ] }), /<span class="ks-badge ks-badge-info">0\/12<\/span>/)
+})
