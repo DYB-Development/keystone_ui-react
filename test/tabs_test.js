@@ -38,3 +38,7 @@ test("calls back with the chosen tab's value when a tab is chosen", () => {
 test("shows only the chosen tab's content", () => {
   assert.deepEqual([ "Validation panel", "Fixtures panel" ].filter((content) => render({ value: "fixtures" }).includes(content)), [ "Fixtures panel" ])
 })
+
+test("draws a tab's count in an info badge after its label", () => {
+  assert.match(render({ tabs: [ { value: "validation", label: "Validation", count: 1 } ] }), /<button[^>]*>Validation <span class="ks-badge ks-badge-info">1<\/span><\/button>/)
+})
