@@ -16,3 +16,7 @@ test("shows each row's label and value as a row of keystone's value list", () =>
 test("shows a row's note under its label", () => {
   assert.match(render({ rows: [ { label: "Rate", value: "$150.00", note: "per hour" } ] }), /<dt class="ks-value-list-label">Rate <span class="ks-value-list-note">per hour<\/span><\/dt>/)
 })
+
+test("shows a row's fallback when its value is missing or empty", () => {
+  assert.deepEqual(pairs(render({ rows: [ { label: "Reviews", value: null, fallback: "N/A" }, { label: "Deploys", value: "", fallback: "N/A" } ] })).map(([ , value ]) => value), [ "N/A", "N/A" ])
+})
