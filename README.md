@@ -155,6 +155,32 @@ import RadioCards from "keystone_ui-react/src/RadioCards"
 />
 ```
 
+`Tabs` draws the same tab row as keystone_ui's Rails tab switcher, then the
+content of the tab whose value is `value` and no other. Choosing a tab calls
+`onChange` with that tab's value. `align` is `"center"` (the default) or
+`"start"`, and `shape` is left out or is `"pills"` or `"underline"`, as in the
+Rails tab switcher. A tab's `count` is drawn after its label, in an info badge
+in a row with no shape and as plain text in a shaped row. A number count shows
+only when it is above zero, and a text count such as `"12/12"` shows as written.
+On a phone the row stays on one line and scrolls sideways when the tabs do not
+fit:
+
+```javascript
+import Tabs from "keystone_ui-react/src/Tabs"
+
+<Tabs
+  align="start"
+  shape="underline"
+  value={tab}
+  onChange={setTab}
+  tabs={[
+    { value: "validation", label: "Validation", count: 1, content: <Issues /> },
+    { value: "fixtures", label: "Fixtures", count: "12/12", content: <Fixtures /> },
+    { value: "dry-run", label: "Dry-run", content: <DryRun /> }
+  ]}
+/>
+```
+
 They import nothing but React and each other, so an engine takes on no other
 dependency by using them, and their look comes from keystone_ui-styles classes
 on the page.
