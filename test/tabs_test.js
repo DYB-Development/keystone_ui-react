@@ -18,3 +18,19 @@ test("shows each tab's label on a keystone tab", () => {
 test("marks only the chosen tab as the current tab", () => {
   assert.deepEqual([ ...render({ value: "fixtures" }).matchAll(/<button[^>]*data-active=""[^>]*>([^<]*)/g) ].map(([ , label ]) => label), [ "Fixtures" ])
 })
+
+const buttons = (element) => {
+  if (!React.isValidElement(element)) return []
+  if (element.type === "button") return [ element ]
+
+  return React.Children.toArray(element.props.children).flatMap(buttons)
+}
+
+test("calls back with the chosen tab's value when a tab is chosen", () => {
+  const chosen = []
+  const fixtures = buttons(Tabs({ tabs: TABS, value: "validation", onChange: (value) => chosen.push(value) }))[1]
+
+  fixtures.props.onClick()
+
+  assert.deepEqual(chosen, [ "fixtures" ])
+})
