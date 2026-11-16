@@ -128,13 +128,31 @@ Each one takes keystone's classes and passes everything else through to the
 element it draws:
 
 `Alert`, `Badge`, `Button`, `Card`, `Checkbox`, `Input`, `Page`, `PageHeader`,
-`Panel`, `Section`, `Select`, `Textarea`, and the form field text `Label`,
-`Hint`, `FieldError` and `Required`.
+`Panel`, `RadioCard`, `Section`, `Select`, `Textarea`, and the form field text
+`Label`, `Hint`, `FieldError` and `Required`.
 
 ```javascript
 import Button from "keystone_ui-react/src/Button"
 
 <Button variant="secondary" size="sm" onClick={save}>Save</Button>
+```
+
+`RadioCards` draws a group of radio cards, each a label with a hint line under
+it, side by side in a row that wraps when the panel is too narrow. Only the card
+whose value is `value` is chosen, and `onChange` gets each input's change event:
+
+```javascript
+import RadioCards from "keystone_ui-react/src/RadioCards"
+
+<RadioCards
+  name="alias"
+  value={alias}
+  onChange={(event) => setAlias(event.target.value)}
+  options={[
+    { value: "prod", label: "prod → v22", hint: "p 0.84 · n 1,920" },
+    { value: "candidate", label: "candidate → v23", hint: "p 0.87 · n 240" }
+  ]}
+/>
 ```
 
 They import nothing but React and each other, so an engine takes on no other
