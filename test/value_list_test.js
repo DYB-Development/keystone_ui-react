@@ -41,6 +41,10 @@ test("in columns, stacks each label above its value", () => {
   assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<div class="([^"]*)"><dt/g) ].map(([ , names ]) => names.split(" ").includes("flex-col")), [ true, true ])
 })
 
+test("in columns, draws each label in small text kept to the height of its text", () => {
+  assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<dt class="([^"]*)"/g) ].map(([ , names ]) => names), Array(2).fill("ks-value-list-label basis-auto text-xs"))
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">
