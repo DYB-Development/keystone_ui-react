@@ -181,6 +181,42 @@ import Tabs from "keystone_ui-react/src/Tabs"
 />
 ```
 
+`ValueList` draws the same list of labels and values as keystone_ui's Rails
+value list. Each row has a `label` and a `value`, and may have a `note` shown
+under the label, a `fallback` shown when the value is missing or empty, `total`
+to draw it as a total row, and `right` to draw a right answer mark after the
+value. `align: "end"` pushes each value to the right end of its row. `columns`
+puts a small label above each value and lays the pairs in two columns, or one
+on a phone, with a long value wrapping inside its own column:
+
+```javascript
+import ValueList from "keystone_ui-react/src/ValueList"
+
+<ValueList
+  columns
+  rows={[
+    { label: "Output format", value: "copy_block v3" },
+    { label: "Timeout", value: "90s" },
+    { label: "Context budget", value: "6k tokens · truncate" }
+  ]}
+/>
+```
+
+`Code` draws the same code block as keystone_ui's Rails code block, with an
+optional `caption` above the code and an optional `language`. `Disclosure`
+draws the same disclosure as keystone_ui's Rails disclosure: its `summary` is
+the line a person clicks to open and close the content under it, and it starts
+closed unless `open` is given:
+
+```javascript
+import Code from "keystone_ui-react/src/Code"
+import Disclosure from "keystone_ui-react/src/Disclosure"
+
+<Disclosure summary="output_schema" open>
+  <Code caption="output_schema → copy_block v3">{"{headline: string≤60, body: string≤400}"}</Code>
+</Disclosure>
+```
+
 They import nothing but React and each other, so an engine takes on no other
 dependency by using them, and their look comes from keystone_ui-styles classes
 on the page.
