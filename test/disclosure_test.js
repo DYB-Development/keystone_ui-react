@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Disclosure from "../src/Disclosure.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(Disclosure, { summary: "input_schema", children: "Schema body", ...props }))
 
@@ -22,6 +23,10 @@ test("draws a caret after its summary that turns over while it is open", () => {
   assert.match(render({}), /<span>input_schema<\/span><span class="ks-disclosure-icon h-4 w-4 shrink-0 transition-transform group-open:rotate-180"><svg[^>]*><path[^>]*d="M19 9l-7 7-7-7"/)
 })
 
+test("adds a class it is given to its outer element", () => {
+  assert.match(render({ className: "mt-4" }), /^<details class="ks-disclosure group mt-4">/)
+})
+
 const RAILS_MARKUP = `<details class="ks-disclosure group" open="">
   <summary class="ks-disclosure-summary flex cursor-pointer list-none items-center justify-between [&amp;::-webkit-details-marker]:hidden">
     <span>input_schema</span>
@@ -33,12 +38,6 @@ const RAILS_MARKUP = `<details class="ks-disclosure group" open="">
   </div>
 </details>
 `
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+/g, ">").replace(/\s+</g, "<").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`).replace(/<\/path>/g, "")
 
 test("draws the markup of keystone_ui's Rails disclosure", () => {
   assert.equal(normalized(render({ open: true })), normalized(RAILS_MARKUP))

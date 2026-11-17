@@ -3,6 +3,8 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Tabs from "../src/Tabs.jsx"
+import { renderIntoDocument, click } from "./support/document.js"
+import { normalized } from "./support/markup.js"
 
 const TABS = [
   { value: "validation", label: "Validation", content: "Validation panel" },
@@ -19,18 +21,11 @@ test("marks only the chosen tab as the current tab", () => {
   assert.deepEqual([ ...render({ value: "fixtures" }).matchAll(/<button[^>]*data-active=""[^>]*>([^<]*)/g) ].map(([ , label ]) => label), [ "Fixtures" ])
 })
 
-const buttons = (element) => {
-  if (!React.isValidElement(element)) return []
-  if (element.type === "button") return [ element ]
-
-  return React.Children.toArray(element.props.children).flatMap(buttons)
-}
-
-test("calls back with the chosen tab's value when a tab is chosen", () => {
+test("calls back with the chosen tab's value when a tab is chosen", async () => {
   const chosen = []
-  const fixtures = buttons(Tabs({ tabs: TABS, value: "validation", onChange: (value) => chosen.push(value) }))[1]
+  const page = await renderIntoDocument(React.createElement(Tabs, { tabs: TABS, value: "validation", onChange: (value) => chosen.push(value) }))
 
-  fixtures.props.onClick()
+  await click([ ...page.querySelectorAll("button") ].find((button) => button.textContent === "Fixtures"))
 
   assert.deepEqual(chosen, [ "fixtures" ])
 })
@@ -61,6 +56,10 @@ test("keeps each tab label on one line at its full width on a phone", () => {
   assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").filter((name) => [ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ].includes(name))), Array(2).fill([ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ]))
 })
 
+test("with no alignment given, centres the tab row on a wide screen and starts it at the left edge on a phone", () => {
+  assert.deepEqual(rowClasses(render({})).filter((name) => [ "justify-start", "justify-center", "max-sm:justify-start" ].includes(name)), [ "justify-center", "max-sm:justify-start" ])
+})
+
 test("aligned to the start, starts the tab row at the left edge on every width", () => {
   assert.deepEqual(rowClasses(render({ align: "start" })).filter((name) => [ "justify-start", "justify-center" ].includes(name)), [ "justify-start" ])
 })
@@ -73,12 +72,20 @@ test("shaped as pills, carries the pill row class", () => {
   assert.ok(rowClasses(render({ shape: "pills" })).includes("ks-tab-bar-pills"))
 })
 
+test("in a tab row with no shape, each tab carries the small text size", () => {
+  assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").includes("text-sm")), [ true, true ])
+})
+
 test("in a shaped tab row, no tab carries its own text size so the shape sets it", () => {
   assert.deepEqual([ ...render({ shape: "underline" }).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").includes("text-sm")), [ false, false ])
 })
 
 test("in a shaped tab row, draws a count as plain text after the label rather than a badge", () => {
   assert.match(render({ shape: "underline", tabs: [ { value: "fixtures", label: "Fixtures", count: "12/12" } ] }), /<button[^>]*>Fixtures <span class="ks-tab-count">12\/12<\/span><\/button>/)
+})
+
+test("adds a class it is given to its outer element", () => {
+  assert.match(render({ className: "mt-4" }), /^<div class="mt-4">/)
 })
 
 const RAILS_MARKUP = `<div data-controller="tab-switcher">
@@ -102,14 +109,8 @@ const RAILS_MARKUP = `<div data-controller="tab-switcher">
 
 const STIMULUS_ATTRIBUTES = /\s(?:data-controller|data-tab-switcher-target|data-action|data-index)="[^"]*"/g
 
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(STIMULUS_ATTRIBUTES, "").replace(/>\s+</g, "><").replace(/\s+>/g, ">").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`)
-
 test("draws the markup of keystone_ui's Rails tab switcher, less its Stimulus wiring", () => {
   const tabs = [ { value: "validation", label: "Validation" }, { value: "fixtures", label: "Fixtures" } ]
 
-  assert.equal(normalized(render({ tabs, align: "start", shape: "underline" })), normalized(RAILS_MARKUP))
+  assert.equal(normalized(render({ tabs, align: "start", shape: "underline" })), normalized(RAILS_MARKUP.replace(STIMULUS_ATTRIBUTES, "")))
 })

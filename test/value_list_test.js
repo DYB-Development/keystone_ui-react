@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import ValueList from "../src/ValueList.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(ValueList, props))
 
@@ -19,6 +20,10 @@ test("shows a row's note under its label", () => {
 
 test("shows a row's fallback when its value is missing or empty", () => {
   assert.deepEqual(pairs(render({ rows: [ { label: "Reviews", value: null, fallback: "N/A" }, { label: "Deploys", value: "", fallback: "N/A" } ] })).map(([ , value ]) => value), [ "N/A", "N/A" ])
+})
+
+test("shows a value of 0 rather than the row's fallback", () => {
+  assert.deepEqual(pairs(render({ rows: [ { label: "Failures", value: 0, fallback: "N/A" } ] })).map(([ , value ]) => value), [ "0" ])
 })
 
 test("draws a row marked as the total as a total row", () => {
@@ -55,6 +60,10 @@ test("in columns, spaces the pairs apart by the small grid gap", () => {
 
 test("in columns, lets a long value shrink its pair to the column's width so it wraps there", () => {
   assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<div class="([^"]*)"><dt/g) ].map(([ , names ]) => names.split(" ").includes("min-w-0")), [ true, true ])
+})
+
+test("adds a class it is given to its outer element", () => {
+  assert.deepEqual(listClasses(render({ rows: [], className: "mt-4" })), [ "ks-value-list", "mt-4" ])
 })
 
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
@@ -97,12 +106,6 @@ const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     </div>
 </dl>
 `
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+/g, ">").replace(/\s+</g, "<").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`).replace(/<(path)([^>]*)><\/path>/g, "<$1$2>")
 
 const RAILS_ROWS = [
   { label: "Rate", value: "$150.00", note: "per hour" },
