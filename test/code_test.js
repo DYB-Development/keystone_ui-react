@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Code from "../src/Code.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(Code, props))
 
@@ -31,12 +32,6 @@ const RAILS_MARKUP = `<div class="ks-code overflow-hidden">
   <pre class="ks-code-block overflow-x-auto font-mono text-sm leading-relaxed"><code class="">{headline: string≤60, cta: string≤30}</code></pre>
 </div>
 `
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+</g, "><").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`)
 
 test("draws the markup of keystone_ui's Rails code block", () => {
   assert.equal(normalized(render({ caption: "output_schema → copy_block v3", children: "{headline: string≤60, cta: string≤30}" })), normalized(RAILS_MARKUP))
