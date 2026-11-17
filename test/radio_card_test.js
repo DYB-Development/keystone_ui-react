@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import RadioCard from "../src/RadioCard.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(RadioCard, { name: "alias", value: "prod", label: "prod → v22", ...props }))
 
@@ -23,12 +24,6 @@ const RAILS_MARKUP = `<label class="inline-block cursor-pointer relative">
         <span class="ks-radio-card-hint block text-sm">p 0.84 · n 1,920</span>
   </span>
 </label>`
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+</g, "><").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`)
 
 test("draws the markup of keystone_ui's Rails radio card", () => {
   assert.equal(normalized(render({ hint: "p 0.84 · n 1,920", defaultChecked: true })), normalized(RAILS_MARKUP))
