@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import RadioCards from "../src/RadioCards.jsx"
+import { renderIntoDocument, click } from "./support/document.js"
 
 const OPTIONS = [
   { value: "prod", label: "prod → v22", hint: "p 0.84 · n 1,920" },
@@ -27,4 +28,13 @@ test("wraps its cards onto their own rows when the row is too narrow", () => {
 
 test("adds a class it is given to the group's outer element", () => {
   assert.match(render({ className: "mt-2" }), /^<div class="flex flex-wrap ks-grid-gap-sm mt-2">/)
+})
+
+test("calls back with the value of the card a person chooses", async () => {
+  let received
+  const page = await renderIntoDocument(React.createElement(RadioCards, { name: "alias", options: OPTIONS, value: "prod", onChange: (value) => { received = value } }))
+
+  await click(page.querySelectorAll("input")[1])
+
+  assert.ok(received === "candidate")
 })
