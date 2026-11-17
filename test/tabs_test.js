@@ -71,6 +71,10 @@ test("shaped as pills, carries the pill row class", () => {
   assert.ok(rowClasses(render({ shape: "pills" })).includes("ks-tab-bar-pills"))
 })
 
+test("in a tab row with no shape, each tab carries the small text size", () => {
+  assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").includes("text-sm")), [ true, true ])
+})
+
 test("in a shaped tab row, no tab carries its own text size so the shape sets it", () => {
   assert.deepEqual([ ...render({ shape: "underline" }).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").includes("text-sm")), [ false, false ])
 })
