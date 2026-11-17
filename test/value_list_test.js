@@ -21,6 +21,10 @@ test("shows a row's fallback when its value is missing or empty", () => {
   assert.deepEqual(pairs(render({ rows: [ { label: "Reviews", value: null, fallback: "N/A" }, { label: "Deploys", value: "", fallback: "N/A" } ] })).map(([ , value ]) => value), [ "N/A", "N/A" ])
 })
 
+test("shows a value of 0 rather than the row's fallback", () => {
+  assert.deepEqual(pairs(render({ rows: [ { label: "Failures", value: 0, fallback: "N/A" } ] })).map(([ , value ]) => value), [ "0" ])
+})
+
 test("draws a row marked as the total as a total row", () => {
   assert.deepEqual([ ...render({ rows: [ { label: "Rate", value: "$150.00" }, { label: "Total billed", value: "$1,875.00", total: true } ] }).matchAll(/<div class="([^"]*)">/g) ].map(([ , names ]) => names), [ "ks-value-list-row", "ks-value-list-row ks-value-list-total" ])
 })
