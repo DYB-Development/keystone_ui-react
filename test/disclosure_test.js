@@ -22,6 +22,10 @@ test("draws a caret after its summary that turns over while it is open", () => {
   assert.match(render({}), /<span>input_schema<\/span><span class="ks-disclosure-icon h-4 w-4 shrink-0 transition-transform group-open:rotate-180"><svg[^>]*><path[^>]*d="M19 9l-7 7-7-7"/)
 })
 
+test("adds a class it is given to its outer element", () => {
+  assert.match(render({ className: "mt-4" }), /^<details class="ks-disclosure group mt-4">/)
+})
+
 const RAILS_MARKUP = `<details class="ks-disclosure group" open="">
   <summary class="ks-disclosure-summary flex cursor-pointer list-none items-center justify-between [&amp;::-webkit-details-marker]:hidden">
     <span>input_schema</span>
