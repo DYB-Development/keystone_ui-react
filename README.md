@@ -139,7 +139,8 @@ import Button from "keystone_ui-react/src/Button"
 
 `RadioCards` draws a group of radio cards, each a label with a hint line under
 it, side by side in a row that wraps when the panel is too narrow. Only the card
-whose value is `value` is chosen, and `onChange` gets each input's change event:
+whose value is `value` is chosen, and choosing a card calls `onChange` with that
+option's value as given, so a numeric value arrives as a number:
 
 ```javascript
 import RadioCards from "keystone_ui-react/src/RadioCards"
@@ -147,7 +148,7 @@ import RadioCards from "keystone_ui-react/src/RadioCards"
 <RadioCards
   name="alias"
   value={alias}
-  onChange={(event) => setAlias(event.target.value)}
+  onChange={setAlias}
   options={[
     { value: "prod", label: "prod → v22", hint: "p 0.84 · n 1,920" },
     { value: "candidate", label: "candidate → v23", hint: "p 0.87 · n 240" }
@@ -216,6 +217,10 @@ import Disclosure from "keystone_ui-react/src/Disclosure"
   <Code caption="output_schema → copy_block v3">{"{headline: string≤60, body: string≤400}"}</Code>
 </Disclosure>
 ```
+
+`RadioCards`, `Tabs`, `ValueList`, `Code` and `Disclosure` add a `className`
+they are given to their outer element, and `RadioCard` adds it to its input
+beside the input's own classes.
 
 They import nothing but React and each other, so an engine takes on no other
 dependency by using them, and their look comes from keystone_ui-styles classes
