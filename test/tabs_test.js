@@ -55,6 +55,10 @@ test("keeps each tab label on one line at its full width on a phone", () => {
   assert.deepEqual([ ...render({}).matchAll(/<button[^>]*class="([^"]*)"/g) ].map(([ , names ]) => names.split(" ").filter((name) => [ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ].includes(name))), Array(2).fill([ "max-sm:shrink-0", "max-sm:whitespace-nowrap" ]))
 })
 
+test("with no alignment given, centres the tab row on a wide screen and starts it at the left edge on a phone", () => {
+  assert.deepEqual(rowClasses(render({})).filter((name) => [ "justify-start", "justify-center", "max-sm:justify-start" ].includes(name)), [ "justify-center", "max-sm:justify-start" ])
+})
+
 test("aligned to the start, starts the tab row at the left edge on every width", () => {
   assert.deepEqual(rowClasses(render({ align: "start" })).filter((name) => [ "justify-start", "justify-center" ].includes(name)), [ "justify-start" ])
 })
