@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Disclosure from "../src/Disclosure.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(Disclosure, { summary: "input_schema", children: "Schema body", ...props }))
 
@@ -37,12 +38,6 @@ const RAILS_MARKUP = `<details class="ks-disclosure group" open="">
   </div>
 </details>
 `
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+/g, ">").replace(/\s+</g, "<").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`).replace(/<\/path>/g, "")
 
 test("draws the markup of keystone_ui's Rails disclosure", () => {
   assert.equal(normalized(render({ open: true })), normalized(RAILS_MARKUP))
