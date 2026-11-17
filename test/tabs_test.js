@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Tabs from "../src/Tabs.jsx"
+import { renderIntoDocument, click } from "./support/document.js"
 
 const TABS = [
   { value: "validation", label: "Validation", content: "Validation panel" },
@@ -19,18 +20,11 @@ test("marks only the chosen tab as the current tab", () => {
   assert.deepEqual([ ...render({ value: "fixtures" }).matchAll(/<button[^>]*data-active=""[^>]*>([^<]*)/g) ].map(([ , label ]) => label), [ "Fixtures" ])
 })
 
-const buttons = (element) => {
-  if (!React.isValidElement(element)) return []
-  if (element.type === "button") return [ element ]
-
-  return React.Children.toArray(element.props.children).flatMap(buttons)
-}
-
-test("calls back with the chosen tab's value when a tab is chosen", () => {
+test("calls back with the chosen tab's value when a tab is chosen", async () => {
   const chosen = []
-  const fixtures = buttons(Tabs({ tabs: TABS, value: "validation", onChange: (value) => chosen.push(value) }))[1]
+  const page = await renderIntoDocument(React.createElement(Tabs, { tabs: TABS, value: "validation", onChange: (value) => chosen.push(value) }))
 
-  fixtures.props.onClick()
+  await click([ ...page.querySelectorAll("button") ].find((button) => button.textContent === "Fixtures"))
 
   assert.deepEqual(chosen, [ "fixtures" ])
 })
