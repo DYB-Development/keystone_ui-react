@@ -24,3 +24,7 @@ test("sets its cards side by side in one row", () => {
 test("wraps its cards onto their own rows when the row is too narrow", () => {
   assert.match(render({}), /^<div class="[^"]*\bflex-wrap\b/)
 })
+
+test("adds a class it is given to the group's outer element", () => {
+  assert.match(render({ className: "mt-2" }), /^<div class="flex flex-wrap ks-grid-gap-sm mt-2">/)
+})
