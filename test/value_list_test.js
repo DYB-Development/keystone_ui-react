@@ -57,6 +57,10 @@ test("in columns, lets a long value shrink its pair to the column's width so it 
   assert.deepEqual([ ...render({ rows: COLUMN_ROWS, columns: true }).matchAll(/<div class="([^"]*)"><dt/g) ].map(([ , names ]) => names.split(" ").includes("min-w-0")), [ true, true ])
 })
 
+test("adds a class it is given to its outer element", () => {
+  assert.deepEqual(listClasses(render({ rows: [], className: "mt-4" })), [ "ks-value-list", "mt-4" ])
+})
+
 const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     <div class="ks-value-list-row">
       <dt class="ks-value-list-label">
