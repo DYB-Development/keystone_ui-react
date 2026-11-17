@@ -4,6 +4,7 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import Tabs from "../src/Tabs.jsx"
 import { renderIntoDocument, click } from "./support/document.js"
+import { normalized } from "./support/markup.js"
 
 const TABS = [
   { value: "validation", label: "Validation", content: "Validation panel" },
@@ -108,14 +109,8 @@ const RAILS_MARKUP = `<div data-controller="tab-switcher">
 
 const STIMULUS_ATTRIBUTES = /\s(?:data-controller|data-tab-switcher-target|data-action|data-index)="[^"]*"/g
 
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(STIMULUS_ATTRIBUTES, "").replace(/>\s+</g, "><").replace(/\s+>/g, ">").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`)
-
 test("draws the markup of keystone_ui's Rails tab switcher, less its Stimulus wiring", () => {
   const tabs = [ { value: "validation", label: "Validation" }, { value: "fixtures", label: "Fixtures" } ]
 
-  assert.equal(normalized(render({ tabs, align: "start", shape: "underline" })), normalized(RAILS_MARKUP))
+  assert.equal(normalized(render({ tabs, align: "start", shape: "underline" })), normalized(RAILS_MARKUP.replace(STIMULUS_ATTRIBUTES, "")))
 })
