@@ -16,8 +16,8 @@ const CountMark = ({ shape, count }) => shape ? <span className="ks-tab-count">{
 
 const shown = (count) => typeof count === "string" ? count !== "" : count > 0
 
-const Tabs = ({ tabs, value, onChange, align = "center", shape }) => (
-  <div>
+const Tabs = ({ tabs, value, onChange, align = "center", shape, className }) => (
+  <div className={className}>
     <div className={classes(ROW_CLASSES[align], SHAPE_CLASSES[shape])}>
       {tabs.map((tab) => (
         <button key={tab.value} type="button" className={shape ? SHAPED_TAB_CLASSES : TAB_CLASSES} data-active={tab.value === value ? "" : undefined} onClick={() => onChange(tab.value)}>

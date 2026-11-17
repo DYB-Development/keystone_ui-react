@@ -75,6 +75,10 @@ test("in a shaped tab row, draws a count as plain text after the label rather th
   assert.match(render({ shape: "underline", tabs: [ { value: "fixtures", label: "Fixtures", count: "12/12" } ] }), /<button[^>]*>Fixtures <span class="ks-tab-count">12\/12<\/span><\/button>/)
 })
 
+test("adds a class it is given to its outer element", () => {
+  assert.match(render({ className: "mt-4" }), /^<div class="mt-4">/)
+})
+
 const RAILS_MARKUP = `<div data-controller="tab-switcher">
   <div class="ks-tab-bar flex flex-wrap justify-start max-sm:flex-nowrap max-sm:overflow-x-auto ks-tab-bar-underline">
       <button
