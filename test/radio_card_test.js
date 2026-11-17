@@ -33,3 +33,7 @@ const normalized = (html) =>
 test("draws the markup of keystone_ui's Rails radio card", () => {
   assert.equal(normalized(render({ hint: "p 0.84 · n 1,920", defaultChecked: true })), normalized(RAILS_MARKUP))
 })
+
+test("keeps a class it is given on its input, alongside the input's own classes", () => {
+  assert.match(render({ className: "is-wide" }), /<input [^>]*class="peer sr-only is-wide"/)
+})
