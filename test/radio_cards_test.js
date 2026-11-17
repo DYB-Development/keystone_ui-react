@@ -38,3 +38,13 @@ test("calls back with the value of the card a person chooses", async () => {
 
   assert.ok(received === "candidate")
 })
+
+test("calls back with a numeric option value as a number", async () => {
+  let received
+  const options = [ { value: 1, label: "One" }, { value: 2, label: "Two" } ]
+  const page = await renderIntoDocument(React.createElement(RadioCards, { name: "count", options, value: 1, onChange: (value) => { received = value } }))
+
+  await click(page.querySelectorAll("input")[1])
+
+  assert.ok(received === 2)
+})
