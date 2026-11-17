@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-17
+
+### Changed
+- A radio card group now calls its change callback with the chosen option's value, a number staying a number, in place of the change event, so a caller written as `(event) => set(event.target.value)` becomes `set`.
+
+### Added
+- RadioCards, Tabs, ValueList, Code and Disclosure add a class they are given to their outer element, and RadioCard keeps one on its input beside the input's own classes.
+
 ## [0.5.0] - 2026-11-16
 
 ### Added
