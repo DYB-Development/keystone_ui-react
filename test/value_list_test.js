@@ -3,6 +3,7 @@ import assert from "node:assert/strict"
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import ValueList from "../src/ValueList.jsx"
+import { normalized } from "./support/markup.js"
 
 const render = (props) => renderToStaticMarkup(React.createElement(ValueList, props))
 
@@ -105,12 +106,6 @@ const RAILS_MARKUP = `<dl class="ks-value-list ks-value-list-end">
     </div>
 </dl>
 `
-
-const sortedAttributes = (attributes) =>
-  [ ...attributes.matchAll(/([\w-]+)(?:="([^"]*)")?/g) ].map(([ , name, value = "" ]) => `${name}="${value}"`).sort().join(" ")
-
-const normalized = (html) =>
-  html.replace(/>\s+/g, ">").replace(/\s+</g, "<").trim().replace(/<([a-z]+)([^>]*?)\/?>/g, (_, tag, attributes) => `<${tag} ${sortedAttributes(attributes)}>`).replace(/<(path)([^>]*)><\/path>/g, "<$1$2>")
 
 const RAILS_ROWS = [
   { label: "Rate", value: "$150.00", note: "per hour" },
